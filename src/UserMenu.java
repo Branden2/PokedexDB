@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -23,17 +22,14 @@ public class UserMenu {
     private Button deleteButton;
     private Button updateButton;
     private Button viewButton;
+    Boolean isMute = false;
 
 
-    public UserMenu(Stage stage, Scene scene) {
+    public UserMenu(Stage stage, Scene scene, MediaPlayer oakPlayer, MediaPlayer userPlayer, MediaPlayer menuPlayer) {
         window = stage;
         menu = scene;
 
         userPane = new Pane();
-
-        URL menuResource = getClass().getResource("menuSelect.mp3");
-        Media menuMedia = new Media (menuResource.toString());
-        MediaPlayer menuPlayer = new MediaPlayer(menuMedia);
 
         BorderPane borderUser = new BorderPane();
 
@@ -61,6 +57,9 @@ public class UserMenu {
         returnButton.setOnMouseReleased(e ->{
             window.setScene(menu);
             menuPlayer.stop();
+            userPlayer.stop();
+            if(!isMute)
+                oakPlayer.play();
         });
 
         insertButton.setOnMousePressed( e -> {

@@ -1,21 +1,15 @@
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.*;
-import javafx.application.*;
 import javafx.scene.*;
 import javafx.scene.effect.*;
-import javafx.scene.media.Media;
-import java.io.File;
 
-import java.awt.*;
-import java.net.URL;
 
 public class PkmnMenu {
 
@@ -28,20 +22,20 @@ public class PkmnMenu {
     private Button deleteButton;
     private Button updateButton;
     private Button viewButton;
+    Button muteButton;
+    Boolean isMute = false;
 
-    public PkmnMenu(Stage stage, Scene scene) {
+    public PkmnMenu(Stage stage, Scene scene, MediaPlayer oakPlayer, MediaPlayer pkmnPlayer, MediaPlayer menuPlayer) {
         window = stage;
         menu = scene;
 
         pkmnPane = new Pane();
 
-        URL menuResource = getClass().getResource("menuSelect.mp3");
-        Media menuMedia = new Media (menuResource.toString());
-        MediaPlayer menuPlayer = new MediaPlayer(menuMedia);
-
         BorderPane borderPkmn = new BorderPane();
 
         Image pkmnImg = new Image("Pokedex_Pokemon.jpg");
+        Image unmute = new Image("unmute.png");
+        Image mute = new Image("mute.png");
         BackgroundSize size = new BackgroundSize(100,100,true,true,true,false);
         BackgroundImage pkmnBackground = new BackgroundImage(pkmnImg, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, size);
         Background pkmnMenuBackground = new Background(pkmnBackground);
@@ -51,6 +45,9 @@ public class PkmnMenu {
         updateButton = new Button("Update");
         viewButton = new Button("View");
         returnButton = new Button("Return");
+        muteButton = new Button();
+        muteButton.setGraphic(new ImageView(unmute));
+
         styleButton(insertButton);
         styleButton(deleteButton);
         styleButton(updateButton);
@@ -65,6 +62,10 @@ public class PkmnMenu {
         returnButton.setOnMouseReleased(e ->{
             window.setScene(menu);
             menuPlayer.stop();
+            pkmnPlayer.stop();
+            if(!isMute)
+                oakPlayer.play();
+
         });
 
         insertButton.setOnMousePressed( e -> {
@@ -89,6 +90,19 @@ public class PkmnMenu {
 
         updateButton.setOnMouseReleased(e -> {
             menuPlayer.stop();
+        });
+
+        muteButton.setOnMouseClicked(e -> {
+            if(isMute){
+                muteButton.setGraphic(new ImageView(unmute));
+                oakPlayer.play();
+                isMute = false;
+            }
+            else{
+                muteButton.setGraphic(new ImageView(mute));
+                oakPlayer.pause();
+                isMute = true;
+            }
         });
 
         VBox leftButtons = new VBox(insertButton,updateButton);

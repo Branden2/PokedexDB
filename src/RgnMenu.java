@@ -1,16 +1,22 @@
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-import java.net.URL;
+import java.lang.reflect.Array;
+import java.util.Optional;
+
 
 public class RgnMenu {
 
@@ -18,24 +24,25 @@ public class RgnMenu {
     private Scene menu;
     private Pane rgnPane;
     private Scene rgnMenu;
+    private Stage viewWindow;
     private Button returnButton;
     private Button insertButton;
     private Button deleteButton;
     private Button updateButton;
     private Button viewButton;
+    Boolean isMute = false;
 
 
-    public RgnMenu(Stage stage, Scene scene) {
+    public RgnMenu(Stage stage, Scene scene, MediaPlayer oakPlayer, MediaPlayer rgnPlayer, MediaPlayer menuPlayer, Image pokeball) {
         window = stage;
         menu = scene;
-
         rgnPane = new Pane();
 
-        URL menuResource = getClass().getResource("menuSelect.mp3");
-        Media menuMedia = new Media (menuResource.toString());
-        MediaPlayer menuPlayer = new MediaPlayer(menuMedia);
-
         BorderPane borderRgn = new BorderPane();
+
+        final Popup viewPop = new Popup();
+        viewPop.setX(500);
+        viewPop.setY(500);
 
         Image rgnImg = new Image("Pokedex_Region.jpg");
         BackgroundSize size = new BackgroundSize(100,100,true,true,true,false);
@@ -61,6 +68,9 @@ public class RgnMenu {
         returnButton.setOnMouseReleased(e ->{
             window.setScene(menu);
             menuPlayer.stop();
+            rgnPlayer.stop();
+            if(!isMute)
+                oakPlayer.play();
         });
 
         insertButton.setOnMousePressed( e -> {
@@ -85,6 +95,32 @@ public class RgnMenu {
 
         updateButton.setOnMouseReleased(e -> {
             menuPlayer.stop();
+        });
+
+        viewButton.setOnMousePressed(e -> {
+            menuPlayer.play();
+        });
+
+        viewButton.setOnMouseReleased(e -> {
+            menuPlayer.stop();
+            /*viewWindow = new Stage();
+            viewWindow.initOwner(window);
+            viewWindow.setTitle("View Regions");
+            viewWindow.getIcons().add(pokeball);
+            Pane viewLayout = new Pane();
+            viewLayout.setStyle("-fx-background-color: paleturquoise;");
+            viewLayout.setPrefSize(500,500);
+            viewWindow.setScene(new Scene(viewLayout));
+            viewWindow.show();*/
+
+//            Creates a choice dialog / drop-down menu
+            String[]  rgnChoices = {"Kanto","Johto"};
+            ChoiceDialog<String> rgnDialog = new ChoiceDialog<>("Kanto", rgnChoices);
+            rgnDialog.setHeaderText("View Regions");
+            rgnDialog.setContentText("Please select a region");
+            rgnDialog.setGraphic(new ImageView(pokeball));
+            Optional<String> result = rgnDialog.showAndWait();
+
         });
 
         VBox leftButtons = new VBox(insertButton,updateButton);

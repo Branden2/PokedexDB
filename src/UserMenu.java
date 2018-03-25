@@ -3,6 +3,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -22,7 +23,6 @@ public class UserMenu {
     private Button deleteButton;
     private Button updateButton;
     private Button viewButton;
-    Boolean isMute = false;
 
 
     public UserMenu(Stage stage, Scene scene, MediaPlayer oakPlayer, MediaPlayer userPlayer, MediaPlayer menuPlayer) {
@@ -43,11 +43,11 @@ public class UserMenu {
         updateButton = new Button("Update");
         viewButton = new Button("View");
         returnButton = new Button("Return");
-        styleButton(insertButton);
-        styleButton(deleteButton);
-        styleButton(updateButton);
-        styleButton(viewButton);
-        styleButton(returnButton);
+        GUI.styleButton(insertButton);
+        GUI.styleButton(deleteButton);
+        GUI.styleButton(updateButton);
+        GUI.styleButton(viewButton);
+        GUI.styleButton(returnButton);
         returnButton.setMinSize(62.5,37.5);
 
         returnButton.setOnMousePressed(e ->{
@@ -58,7 +58,7 @@ public class UserMenu {
             window.setScene(menu);
             menuPlayer.stop();
             userPlayer.stop();
-            if(!isMute)
+            if(!GUI.isMute)
                 oakPlayer.play();
         });
 
@@ -86,6 +86,14 @@ public class UserMenu {
             menuPlayer.stop();
         });
 
+        viewButton.setOnMousePressed(e -> {
+            menuPlayer.play();
+        });
+
+        viewButton.setOnMouseReleased(e ->{
+            menuPlayer.stop();
+        });
+
         VBox leftButtons = new VBox(insertButton,updateButton);
         VBox rightButtons = new VBox(deleteButton,viewButton);
         HBox topButton = new HBox(returnButton);
@@ -105,20 +113,6 @@ public class UserMenu {
 
     public Scene getScene(){
         return userMenu;
-    }
-
-    private void styleButton(Button button){
-        button.setMinSize(125,75);
-        button.setStyle("-fx-background-color: #FFC808; -fx-border-width: 6px; -fx-border-color: #3C5AA6;" +
-                " -fx-base: #ed1c24;");
-        button.setFont(Font.font("Impact", 20));
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.DARKBLUE);
-
-        // will add drop shadow when muse hovers over, will remove when not
-        button.setOnMouseEntered(e -> button.setEffect(shadow));
-        button.setOnMouseExited(e -> button.setEffect(null));
-
     }
 }
 

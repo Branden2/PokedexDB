@@ -1,8 +1,6 @@
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +14,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.xml.crypto.Data;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -27,13 +26,11 @@ public class RgnMenu {
     private Scene menu;
     private Pane rgnPane;
     private Scene rgnMenu;
-    private Stage viewWindow;
     private Button returnButton;
     private Button insertButton;
     private Button deleteButton;
     private Button updateButton;
     private Button viewButton;
-    Boolean isMute = false;
 
 
     public RgnMenu(Stage stage, Scene scene, MediaPlayer oakPlayer, MediaPlayer rgnPlayer, MediaPlayer menuPlayer, Image pokeball) {
@@ -57,11 +54,11 @@ public class RgnMenu {
         updateButton = new Button("Update");
         viewButton = new Button("View");
         returnButton = new Button("Return");
-        styleButton(insertButton);
-        styleButton(deleteButton);
-        styleButton(updateButton);
-        styleButton(viewButton);
-        styleButton(returnButton);
+        GUI.styleButton(insertButton);
+        GUI.styleButton(deleteButton);
+        GUI.styleButton(updateButton);
+        GUI.styleButton(viewButton);
+        GUI.styleButton(returnButton);
         returnButton.setMinSize(62.5,37.5);
 
         returnButton.setOnMousePressed(e ->{
@@ -72,7 +69,7 @@ public class RgnMenu {
             window.setScene(menu);
             menuPlayer.stop();
             rgnPlayer.stop();
-            if(!isMute)
+            if(!GUI.isMute)
                 oakPlayer.play();
         });
 
@@ -82,6 +79,33 @@ public class RgnMenu {
 
         insertButton.setOnMouseReleased( e -> {
             menuPlayer.stop();
+            Dialog<Array> dialog = new Dialog<>();
+            dialog.setTitle("Insert Region");
+            dialog.setHeaderText("Enter New Region Information");
+            dialog.setResizable(false);
+            Label codeLabel = new Label("Region Code: ");
+//            codeLabel.setFont(Font.font("Impact", 20));
+            Label nameLabel = new Label("Region Name: ");
+//            nameLabel.setFont(Font.font("Impact", 20));
+            TextField codeText = new TextField();
+//            codeText.setStyle("-fx-background-color: #FFC808;");
+            TextField nameText = new TextField();
+//            nameText.setStyle("-fx-background-color: #FFC808;");
+
+            GridPane grid = new GridPane();
+            grid.setPadding(new Insets(10));
+            grid.add(codeLabel, 1,1);
+            grid.add(codeText, 2, 1);
+            grid.add(nameLabel,1,3);
+            grid.add(nameText,2,3);
+            dialog.getDialogPane().setContent(grid);
+            dialog.getDialogPane().setStyle("-fx-background-color: #2a75bb");
+            dialog.setGraphic(new ImageView(pokeball));
+            ButtonType buttonTypeOK = new
+                    ButtonType("Insert", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().add(buttonTypeOK);
+
+            dialog.show();
         });
 
         deleteButton.setOnMousePressed( e -> {
@@ -90,6 +114,31 @@ public class RgnMenu {
 
         deleteButton.setOnMouseReleased( e -> {
             menuPlayer.stop();
+            String[]  rgnChoices = {"Kanto","Johto"};
+            Optional<String> result = GUI.makeDropDown(rgnChoices, "Delete Regions","Delete Regions", "Select a Region", pokeball);
+            if(result.isPresent()) {
+                try {
+                    ArrayList<String> viewStatement = BackEnd.selectFROM("*". "Region");
+                    BackEnd.deleteFROM(result.get(), "Region_Name", "Region");
+                    //then we will get the name & code from the ArrayList
+                    String rgnName = viewStatement.get(1);
+
+                    Text deleteText = new Text(rgnName + " was successfully deleted");
+                    deleteText.setFont(Font.font("Impact", 20));
+                    Image rgnMap = new Image(rgnName + ".png");
+
+                    VBox rgnInfo = new VBox(deleteText, new ImageView(rgnMap));
+                    rgnInfo.setPadding(new Insets(30, 250, 10, 250));
+                    Stage viewWindow = GUI.makePopupWindow(window, "Delete Regions", pokeball);
+                    BorderPane viewLayout = GUI.makePopupPane(rgnInfo);
+                    viewWindow.setScene(new Scene(viewLayout));
+
+
+                    viewWindow.show();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
         });
 
         updateButton.setOnMousePressed(e -> {
@@ -98,6 +147,56 @@ public class RgnMenu {
 
         updateButton.setOnMouseReleased(e -> {
             menuPlayer.stop();
+            String[]  rgnChoices = {"Kanto","Johto"};
+            Optional<String> result = GUI.makeDropDown(rgnChoices, "Update Region","Update Region", "Select a Region", pokeball);
+            if(result.isPresent()) {
+                try {
+                    ArrayList<String> viewStatement = BackEnd.selectFROM(result.get());
+                    //then we will get the name & code from the ArrayList
+                    String rgnName = viewStatement.get(1);
+
+                    Dialog<Array> dialog = new Dialog<>();
+                    dialog.setTitle("Update Region");
+                    dialog.setHeaderText("Enter New Region Name for " + rgnName);
+                    dialog.setResizable(false);
+                    Label nameLabel = new Label("Region Name: ");
+                    TextField nameText = new TextField();
+
+                    GridPane grid = new GridPane();
+                    grid.add(nameLabel,1,3);
+                    grid.add(nameText,2,3);
+                    dialog.getDialogPane().setContent(grid);
+                    dialog.getDialogPane().setStyle("-fx-background-color: #2a75bb");
+                    dialog.setGraphic(new ImageView(pokeball));
+                    ButtonType buttonTypeOK = new
+                            ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
+                    dialog.getDialogPane().getButtonTypes().add(buttonTypeOK);
+
+                    dialog.showAndWait();
+
+
+                    if(nameText.getText()!=null){
+                        BackEnd.update(rgnName, nameText.getText());
+                        Text deleteText = new Text(rgnName + " was successfully update to " + nameText.getText());
+                        deleteText.setFont(Font.font("Impact", 20));
+                        Image rgnMap = new Image(rgnName + ".png");
+
+
+                        VBox rgnInfo = new VBox(deleteText, new ImageView(rgnMap));
+                        rgnInfo.setPadding(new Insets(30, 250, 10, 250));
+                        Stage viewWindow = GUI.makePopupWindow(window, "Update Region", pokeball);
+                        BorderPane viewLayout = GUI.makePopupPane(rgnInfo);
+                        viewWindow.setScene(new Scene(viewLayout));
+
+
+                        viewWindow.show();
+                    }
+
+
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
         });
 
         viewButton.setOnMousePressed(e -> {
@@ -106,44 +205,52 @@ public class RgnMenu {
 
         viewButton.setOnMouseReleased((MouseEvent e) -> {
             menuPlayer.stop();
-            //this arrayList will be passed from the back end
-            //Will contain two Strings, the region code and the region name;
-            ArrayList<String> viewStatement = new ArrayList<String>();
-            //for testing purposes we will set the arraylist here
-            viewStatement.add("1");
-            viewStatement.add("Kanto");
-            //then we will get the name & code from the ArrayList
-            String rgnCode = viewStatement.get(0);
-            String rgnName = viewStatement.get(1);
+            ArrayList<String> rgnList = null;
+            try {
+                rgnList = BackEnd.selectFROM("Region_Name", "Region");
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            String[] rgnChoice;
+            rgnChoice = new String[rgnList.size()];
+            for(int i=0; i<rgnChoice.length; i++)
+                rgnChoice[i] = rgnList.get(i);
 
-            Text rgnCodeText = new Text("Region Code: " + rgnCode);
-            Text rgnNameText = new Text("Region Name: " + rgnName);
-            rgnCodeText.setFont(Font.font("Impact", 20));
-            rgnNameText.setFont(Font.font("Impact", 20));
-            Image rgnMap = new Image(rgnName+".png");
+            //String[]  rgnChoices = {"Kanto","Johto"};//get this from connector
+            Optional<String> result = GUI.makeDropDown(rgnChoice, "View Regions","View Regions", "Select a Region", pokeball);
 
+            if(result.isPresent()){
+                try {
+                    ArrayList<String> viewStatement = BackEnd.selectFROM("*", "Region");
+                    //then we will get the name & code from the ArrayList
+                    String rgnCode = viewStatement.get(0);
+                    String rgnName = viewStatement.get(1);
 
-            VBox rgnInfo = new VBox(rgnCodeText, rgnNameText, new ImageView(rgnMap));
-            rgnInfo.setPadding(new Insets(30, 250, 10, 250));
-            viewWindow = new Stage();
-            viewWindow.initOwner(window);
-            viewWindow.setTitle("View Regions");
-            viewWindow.getIcons().add(pokeball);
-            BorderPane viewLayout = new BorderPane();
-            viewLayout.setStyle("-fx-background-color: paleturquoise;");
-            viewLayout.setPrefSize(500,500);
-            viewLayout.setCenter(rgnInfo);
-            viewWindow.setScene(new Scene(viewLayout));
+                    Text rgnCodeText = new Text("Region Code: " + rgnCode);
+                    Text rgnNameText = new Text("Region Name: " + rgnName);
+                    rgnCodeText.setFont(Font.font("Impact", 20));
+                    rgnNameText.setFont(Font.font("Impact", 20));
+                    /*if(rgnName.equals("Kanto") || rgnName.equals("Johot")) {
+                        Image rgnMap = new Image(rgnName + ".png");
+                        VBox rgnInfo = new VBox(rgnCodeText, rgnNameText, new ImageView(rgnMap));
+                    }
+                    else*/
+                    VBox rgnInfo = new VBox(rgnCodeText, rgnNameText);
+                    if(rgnName.equals("Kanto") || rgnName.equals("Johot")) {
+                        Image rgnMap = new Image(rgnName + ".png");
+                        rgnInfo.getChildren().add(new ImageView(rgnMap));
+                    }
 
-            viewWindow.show();
+                    rgnInfo.setPadding(new Insets(30, 250, 10, 250));
+                    Stage viewWindow = GUI.makePopupWindow(window, "View Regions", pokeball);
+                    BorderPane viewLayout = GUI.makePopupPane(rgnInfo);
+                    viewWindow.setScene(new Scene(viewLayout));
 
-//            Creates a choice dialog / drop-down menu
-           /* String[]  rgnChoices = {"Kanto","Johto"};
-            ChoiceDialog<String> rgnDialog = new ChoiceDialog<>("Kanto", rgnChoices);
-            rgnDialog.setHeaderText("View Regions");
-            rgnDialog.setContentText("Please select a region");
-            rgnDialog.setGraphic(new ImageView(pokeball));
-            Optional<String> result = rgnDialog.showAndWait();*/
+                    viewWindow.show();
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+            }
 
         });
 
@@ -167,20 +274,6 @@ public class RgnMenu {
 
     public Scene getScene(){
         return rgnMenu;
-    }
-
-    private void styleButton(Button button){
-        button.setMinSize(125,75);
-        button.setStyle("-fx-background-color: #FFC808; -fx-border-width: 6px; -fx-border-color: #3C5AA6;" +
-                " -fx-base: #ed1c24;");
-        button.setFont(Font.font("Impact", 20));
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.DARKBLUE);
-
-        // will add drop shadow when muse hovers over, will remove when not
-        button.setOnMouseEntered(e -> button.setEffect(shadow));
-        button.setOnMouseExited(e -> button.setEffect(null));
-
     }
 }
 

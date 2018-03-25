@@ -12,6 +12,7 @@ import javafx.scene.*;
 import javafx.scene.effect.*;
 import javafx.scene.media.Media;
 import java.net.URL;
+import java.util.Optional;
 
 
 public class GUI extends Application{
@@ -26,7 +27,7 @@ public class GUI extends Application{
     private Button rgnMenuButton;
     private Button exitButton;
     private Button muteButton;
-    private Boolean isMute = false;
+    public static Boolean isMute = false;
     //private MediaPlayer mainMedia = new MediaPlayer(new Media(new File("oaksResearchLabMusic.mp3").toURI().toString()));
 
 
@@ -175,17 +176,11 @@ public class GUI extends Application{
                 muteButton.setGraphic(new ImageView(unmute));
                 oakPlayer.play();
                 isMute = false;
-                pkmn.isMute = false;
-                user.isMute = false;
-                rgn.isMute = false;
             }
             else{
                 muteButton.setGraphic(new ImageView(mute));
                 oakPlayer.pause();
                 isMute = true;
-                pkmn.isMute = true;
-                user.isMute = true;
-                rgn.isMute = true;
             }
         });
 
@@ -193,7 +188,7 @@ public class GUI extends Application{
         window.show();
     }
 
-    private void styleButton(Button button){
+    public static void styleButton(Button button){
         button.setMinSize(125,75);
         button.setStyle("-fx-background-color: #FFC808; -fx-border-width: 6px; -fx-border-color: #3C5AA6;" +
                 " -fx-base: #ed1c24; -fx-focus-color: transparent");
@@ -207,5 +202,29 @@ public class GUI extends Application{
 
     }
 
-
+    public static Optional<String> makeDropDown(String[] rgnChoices, String title, String header, String context, Image pic){
+        ChoiceDialog<String> rgnDialog = new ChoiceDialog<>(rgnChoices[0], rgnChoices);
+        rgnDialog.setTitle(title);
+        rgnDialog.setHeaderText(header);
+        rgnDialog.setContentText(context);
+        rgnDialog.setGraphic(new ImageView(pic));
+        rgnDialog.setResizable(false);
+        Optional<String> result = rgnDialog.showAndWait();
+        return result;
+    }
+    public static Stage makePopupWindow(Stage window, String title, Image icon){
+        Stage popupWindow = new Stage();
+        popupWindow.initOwner(window);
+        popupWindow.setTitle(title);
+        popupWindow.getIcons().add(icon);
+        popupWindow.setResizable(false);
+        return popupWindow;
+    }
+    public static BorderPane makePopupPane(VBox info){
+        BorderPane popupLayout = new BorderPane();
+        popupLayout.setStyle("-fx-background-color: paleturquoise;");
+        popupLayout.setPrefSize(500,500);
+        popupLayout.setCenter(info);
+        return popupLayout;
+    }
 }

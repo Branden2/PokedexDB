@@ -2,7 +2,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -24,6 +23,7 @@ public class PkmnMenu {
     private Button updateButton;
     private Button viewButton;
     Button muteButton;
+    Boolean isMute = false;
 
     public PkmnMenu(Stage stage, Scene scene, MediaPlayer oakPlayer, MediaPlayer pkmnPlayer, MediaPlayer menuPlayer) {
         window = stage;
@@ -48,11 +48,11 @@ public class PkmnMenu {
         muteButton = new Button();
         muteButton.setGraphic(new ImageView(unmute));
 
-        GUI.styleButton(insertButton);
-        GUI.styleButton(deleteButton);
-        GUI.styleButton(updateButton);
-        GUI.styleButton(viewButton);
-        GUI.styleButton(returnButton);
+        styleButton(insertButton);
+        styleButton(deleteButton);
+        styleButton(updateButton);
+        styleButton(viewButton);
+        styleButton(returnButton);
         returnButton.setMinSize(62.5,37.5);
 
         returnButton.setOnMousePressed(e ->{
@@ -63,7 +63,7 @@ public class PkmnMenu {
             window.setScene(menu);
             menuPlayer.stop();
             pkmnPlayer.stop();
-            if(!GUI.isMute)
+            if(!isMute)
                 oakPlayer.play();
 
         });
@@ -92,24 +92,16 @@ public class PkmnMenu {
             menuPlayer.stop();
         });
 
-        viewButton.setOnMousePressed(e -> {
-            menuPlayer.play();
-        });
-
-        viewButton.setOnMouseReleased(e -> {
-                    menuPlayer.stop();
-        });
-
         muteButton.setOnMouseClicked(e -> {
-            if(GUI.isMute){
+            if(isMute){
                 muteButton.setGraphic(new ImageView(unmute));
                 oakPlayer.play();
-                GUI.isMute = false;
+                isMute = false;
             }
             else{
                 muteButton.setGraphic(new ImageView(mute));
                 oakPlayer.pause();
-                GUI.isMute = true;
+                isMute = true;
             }
         });
 
@@ -134,5 +126,18 @@ public class PkmnMenu {
         return pkmnMenu;
     }
 
+    private void styleButton(Button button){
+        button.setMinSize(125,75);
+        button.setStyle("-fx-background-color: #FFC808; -fx-border-width: 6px; -fx-border-color: #3C5AA6;" +
+                " -fx-base: #ed1c24;");
+        button.setFont(Font.font("Impact", 20));
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.DARKBLUE);
+
+        // will add drop shadow when muse hovers over, will remove when not
+        button.setOnMouseEntered(e -> button.setEffect(shadow));
+        button.setOnMouseExited(e -> button.setEffect(null));
+
+    }
 }
 

@@ -6,14 +6,14 @@ public class DatabaseConnectTest {
 	
 	public static void main (String[] args) throws Exception {
 
-		String b = "Kanto";
-		String c = "SUCC";
+		String b = "SUCC";
+		String c = "Kanto";
 		updateName(b,c);
 
 /*		String x = "INSERT INTO Region (Region_Code, Region_Name) VALUES (3,'HI')";
 		insertINTO(x);*/
-		String y = "Kanto";
-		selectFROM( y );
+		//String y = "Kanto";
+		selectFROM( c );
 		/*String s = "DELETE FROM Region WHERE Region_Name = 'Hi'";
 		deleteFROM(s);
 		selectFROM(y);*/
@@ -46,7 +46,9 @@ public class DatabaseConnectTest {
 			//connect to database
 			Connection con = getConnection();
 			//prepare the statEment that is passed in
-			PreparedStatement posted = con.prepareStatement(n);
+			PreparedStatement posted = con.prepareStatement("UPDATE Region SET Region.Region_Name = '"+ n +"' " +
+					"WHERE Region.Region_Name = '"+ o +"' AND Region.Region_Code = " +
+					"(SELECT R2.Region_Code FROM (SELECT * FROM Region)R2 WHERE R2.Region_Name = '"+ o +"');");
 			//execute update
 			posted.executeUpdate();
 			System.out.println("Update complete.");

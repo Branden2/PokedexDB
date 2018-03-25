@@ -209,6 +209,7 @@ public class GUI extends Application{
         rgnDialog.setContentText(context);
         rgnDialog.setGraphic(new ImageView(pic));
         rgnDialog.setResizable(false);
+        rgnDialog.getDialogPane().setStyle("-fx-background-color: #2a75bb");
         Optional<String> result = rgnDialog.showAndWait();
         return result;
     }
@@ -222,7 +223,7 @@ public class GUI extends Application{
     }
     public static BorderPane makePopupPane(VBox info){
         BorderPane popupLayout = new BorderPane();
-        popupLayout.setStyle("-fx-background-color: paleturquoise;");
+        popupLayout.setStyle("-fx-background-color: #99D9EA;");
         popupLayout.setPrefSize(500,500);
         popupLayout.setCenter(info);
         return popupLayout;

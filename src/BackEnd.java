@@ -2,151 +2,151 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class BackEnd {
-	public static void main (String[] args) throws Exception {
+    public static void main (String[] args) throws Exception {
 
-	}//end main method
+    }//end main method
 
-	public static ArrayList<String> selectFROM( String column, String table) throws Exception {
+    public static ArrayList<String> selectFROM( String column, String table) throws Exception {
 
-		try (Connection con = getConnection()){
+        try (Connection con = getConnection()){
 
-			String SQL = "SELECT " + column + " FROM " + table + ";";
+            String SQL = "SELECT " + column + " FROM " + table + ";";
 
-			PreparedStatement statement = con.prepareStatement(SQL);
-			ResultSet result = statement.executeQuery();
-			ResultSetMetaData metaData = result.getMetaData();
+            PreparedStatement statement = con.prepareStatement(SQL);
+            ResultSet result = statement.executeQuery();
+            ResultSetMetaData metaData = result.getMetaData();
 
-			ArrayList<String> array = new ArrayList<>();
-			while(result.next()) {
+            ArrayList<String> array = new ArrayList<>();
+            while(result.next()) {
 
-				for (int i = 1; i < metaData.getColumnCount() + 1; i++) {
-					array.add(result.getString(i));
-				}
-			}
-			return array;
-		} catch (Exception e) {
-			System.out.println("Exception... "+e);
-		}
-		return null;
-	}
+                for (int i = 1; i < metaData.getColumnCount() + 1; i++) {
+                    array.add(result.getString(i));
+                }
+            }
+            return array;
+        } catch (Exception e) {
+            System.out.println("Exception... "+e);
+        }
+        return null;
+    }
 
-	public static ArrayList<String> selectFROM( ArrayList<String> columns, ArrayList<String> tables) throws Exception {
+    public static ArrayList<String> selectFROM( ArrayList<String> columns, ArrayList<String> tables) throws Exception {
 
-		try (Connection con = getConnection()){
+        try (Connection con = getConnection()){
 
-			String colNames = parseList(columns);
-			String tableNames = parseList(tables);
+            String colNames = parseList(columns);
+            String tableNames = parseList(tables);
 
-			String SQL = "SELECT " + colNames + " FROM " + tableNames + ";";
+            String SQL = "SELECT " + colNames + " FROM " + tableNames + ";";
 
-			PreparedStatement statement = con.prepareStatement(SQL);
-			ResultSet result = statement.executeQuery();
-			ResultSetMetaData metaData = result.getMetaData();
+            PreparedStatement statement = con.prepareStatement(SQL);
+            ResultSet result = statement.executeQuery();
+            ResultSetMetaData metaData = result.getMetaData();
 
-			ArrayList<String> array = new ArrayList<>();
-			while(result.next()) {
+            ArrayList<String> array = new ArrayList<>();
+            while(result.next()) {
 
-				for (int i = 1; i < metaData.getColumnCount() + 1; i++) {
-					array.add(result.getString(i));
-				}
-			}
-			return array;
-		} catch (Exception e) {
-			System.out.println("Exception... "+e);
-		}
-		return null;
-	}
+                for (int i = 1; i < metaData.getColumnCount() + 1; i++) {
+                    array.add(result.getString(i));
+                }
+            }
+            return array;
+        } catch (Exception e) {
+            System.out.println("Exception... "+e);
+        }
+        return null;
+    }
 
-	public static ArrayList<String> selectFROM( ArrayList<String> columns , ArrayList<String> tables, String key1, String key2) throws Exception {
-		
-		try (Connection con = getConnection()){
+    public static ArrayList<String> selectFROM( ArrayList<String> columns , ArrayList<String> tables, String key1, String key2) throws Exception {
 
-			String colNames = parseList(columns);
-			String tableNames = parseList(tables);
+        try (Connection con = getConnection()){
 
-			String SQL = "SELECT " + colNames + " FROM " + tableNames + " WHERE " + key1 + " = " + key2 + ";";
+            String colNames = parseList(columns);
+            String tableNames = parseList(tables);
 
-			PreparedStatement statement = con.prepareStatement(SQL);
-			ResultSet result = statement.executeQuery();
-			ResultSetMetaData metaData = result.getMetaData();
+            String SQL = "SELECT " + colNames + " FROM " + tableNames + " WHERE " + key1 + " = " + key2 + ";";
 
-			ArrayList<String> array = new ArrayList<>();
-			while(result.next()) {
+            PreparedStatement statement = con.prepareStatement(SQL);
+            ResultSet result = statement.executeQuery();
+            ResultSetMetaData metaData = result.getMetaData();
 
-				for (int i = 1; i < metaData.getColumnCount() + 1; i++) {
-					array.add(result.getString(i));
-				}
-			}
-			return array;
-		} catch (Exception e) {
-			System.out.println("Exception... "+e);
-		}
+            ArrayList<String> array = new ArrayList<>();
+            while(result.next()) {
 
-		return null;
-	}
-	
-	public static void insertINTO(String table, ArrayList<String> columns, ArrayList<String> values) throws Exception {
-		
-		try (Connection con = getConnection()){
+                for (int i = 1; i < metaData.getColumnCount() + 1; i++) {
+                    array.add(result.getString(i));
+                }
+            }
+            return array;
+        } catch (Exception e) {
+            System.out.println("Exception... "+e);
+        }
 
-			String SQL = "INSERT INTO `" + table + "` (" + parseList(columns) + ") VALUES (" + parseList(values) + ");";
+        return null;
+    }
 
-			PreparedStatement insert = con.prepareStatement(SQL);
+    public static void insertINTO(String table, ArrayList<String> columns, ArrayList<String> values) throws Exception {
 
-			insert.executeUpdate();
+        try (Connection con = getConnection()){
 
-		} catch (Exception e) {
-			System.out.println("Exception caught... "+e);
-		}
-	}
+            String SQL = "INSERT INTO `" + table + "` (" + parseList(columns) + ") VALUES (" + parseList(values) + ");";
 
-	public static void deleteFROM(String table, String condition) throws Exception {
+            PreparedStatement insert = con.prepareStatement(SQL);
 
-		try (Connection con = getConnection()){
+            insert.executeUpdate();
 
-			String SQL = "DELETE FROM " + table + " WHERE " + condition;
+        } catch (Exception e) {
+            System.out.println("Exception caught... "+e);
+        }
+    }
 
-			PreparedStatement delete = con.prepareStatement(SQL);
-			delete.executeUpdate();
+    public static void deleteFROM(String table, String condition) throws Exception {
 
-		} catch (Exception e) {
-			System.out.println("Exception thrown... "+e);
-		}
-	}
+        try (Connection con = getConnection()){
 
-	public static void update(String table, String columns, String condition){
+            String SQL = "DELETE FROM " + table + " WHERE " + condition;
 
-		try (Connection con = getConnection()){
+            PreparedStatement delete = con.prepareStatement(SQL);
+            delete.executeUpdate();
 
-			String SQL = "UPDATE " + table + " SET " + columns + " WHERE " + condition + ";";
+        } catch (Exception e) {
+            System.out.println("Exception thrown... "+e);
+        }
+    }
 
-			PreparedStatement update = con.prepareStatement(SQL);
-			update.executeUpdate();
+    public static void update(String table, String columns, String condition){
 
-		} catch (Exception e) {
-			System.out.println("Exception thrown... " + e);
-		}
+        try (Connection con = getConnection()){
 
-	}
-	
-	public static Connection getConnection() throws Exception { 
-		
-		try {
-			String driver = "com.mysql.jdbc.Driver";
-			String url = "jdbc:mysql://localhost:3306/pokedex?useSSL=false";
-			String username = "java";
-			String password = "csci2141";
-			Class.forName(driver);
-			
-			Connection conn = DriverManager.getConnection(url, username, password);
-			return conn;
-		} catch(Exception e) {
-			System.out.println("Exception found..." + e);
-		}
-		return null;
-	}
+            String SQL = "UPDATE " + table + " SET " + columns + " WHERE " + condition + ";";
 
-	private static String parseList(ArrayList<String> data){
-		return String.valueOf(data).replaceAll("\\[|\\]","");
-	}
+            PreparedStatement update = con.prepareStatement(SQL);
+            update.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Exception thrown... " + e);
+        }
+
+    }
+
+    public static Connection getConnection() throws Exception {
+
+        try {
+            String driver = "com.mysql.jdbc.Driver";
+            String url = "jdbc:mysql://localhost:3306/pokedex?useSSL=false";
+            String username = "java";
+            String password = "csci2141";
+            Class.forName(driver);
+
+            Connection conn = DriverManager.getConnection(url, username, password);
+            return conn;
+        } catch(Exception e) {
+            System.out.println("Exception found..." + e);
+        }
+        return null;
+    }
+
+    private static String parseList(ArrayList<String> data){
+        return String.valueOf(data).replaceAll("\\[|\\]","");
+    }
 }//end class

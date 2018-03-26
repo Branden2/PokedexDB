@@ -15,11 +15,11 @@ is written in Java and retrieves all of the data from a mySQL database.
      MySQL Workbench) and run the provided Pokedex.sql script. This populates
      the database with data that the GUI will use.
      
-  2. 
-
--- --------------------------------------------------------------------------
--- Built With
--- --------------------------------------------------------------------------
+  2.
+  
+  
+  Built With
+-----------------------------------------------------------------------------
 
 + Java JDK 1.8.0_161 with JavaFX 8
     - Language used to create front end application and GUI.
@@ -37,9 +37,9 @@ is written in Java and retrieves all of the data from a mySQL database.
     - JDBC Driver used to connect the application to the database.
         ~ https://dev.mysql.com/downloads/connector/j/
 
--- --------------------------------------------------------------------------
--- Authors
--- --------------------------------------------------------------------------
+
+<b>  Authors <b/>
+-----------------------------------------------------------------------------
 
 Developed By:
 

@@ -38,7 +38,7 @@ is written in Java and retrieves all of the data from a mySQL database.
         ~ https://dev.mysql.com/downloads/connector/j/
 
 
-<b>  Authors <b/>
+<b>  Authors </b>
 -----------------------------------------------------------------------------
 
 Developed By:

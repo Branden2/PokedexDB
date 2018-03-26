@@ -1,0 +1,44 @@
+-- ---------------------------------------------------------------
+-- Contributions
+-- ---------------------------------------------------------------
+
+Below are the contributions to the project made by each group
+member.
+
+Bailey Weir
+------------------------------------------------------------------
++ Created Presentation Slideshow
++ Created Conceptual Data Model
++ Designed Tables in Database
++ Lead GUI Design
+    - Designed Layout of GUI
+    - Made Methods for Generating Pop Up Windows/Textfields/Drop Menus
+    - Added Music
+
+Branden Rice
+------------------------------------------------------------------
++ Helped Populate Tables in Database
++ Helped Write Data Insertion Script
++ Created Back End Methods for Generating SQL Queries
++ Facilitated Application/Database Interaction
++ Hosted GitHub Repository & Remote Database Server
++ Created readme.txt and contributions.txt
++ Created Project Summary
+
+Brandon Patterson
+------------------------------------------------------------------
++ Assistant GUI Design
+    - Added Menu Backgrounds
++ QA Analyst
++ Improved Error Checking in Front End
++ Implemented Back End Methods in GUI
+
+Stephen Karavos
+------------------------------------------------------------------
++ Lead Database Design
++ Retrieved Data from Online Sources Using Excel
++ Populated Tables in Database
++ Assistant GUI Designer
+    - ADDED STUFF
+    - MORE STUFF
+    

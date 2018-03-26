@@ -5,7 +5,7 @@
   Professor Oak's Pokedex Database is a GUI application that allows users
 to modify and view various entries in a Pokedex database, including
 species of pokemon, trainers, attacks, evolutions and more. The application
-is written in Java and retrieves all of the data from a mySQL database.
+is written in Java and retrieves all of the data from a MySQL database.
 
 
   Getting Started
@@ -15,7 +15,9 @@ is written in Java and retrieves all of the data from a mySQL database.
      MySQL Workbench) and run the provided Pokedex.sql script. This populates
      the database with data that the GUI will use.
      
-  2.
+  2. kys
+  
+  3. Thanks
   
   
   Built With
@@ -38,7 +40,7 @@ is written in Java and retrieves all of the data from a mySQL database.
         ~ https://dev.mysql.com/downloads/connector/j/
 
 
-<b>  Authors </b>
+  Authors
 -----------------------------------------------------------------------------
 
 Developed By:
@@ -48,6 +50,9 @@ Developed By:
 + Brandon Patterson - Full Stack Developer
 + Stephen Karavos - Lead Database Design
 
+
 -- -------------------------------------------------------------------------
 -- License
 -- -------------------------------------------------------------------------
+
+

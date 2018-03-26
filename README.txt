@@ -45,10 +45,10 @@ is written in Java and retrieves all of the data from a MySQL database.
 
 Developed By:
 
-+ Bailey Weir -  Lead Front End Developer
-+ Branden Rice - Lead Back End Developer
-+ Brandon Patterson - Full Stack Developer
-+ Stephen Karavos - Lead Database Design
++ Bailey Weir - Front End Developer
++ Branden Rice - Back End Developer
++ Brandon Patterson - QA Analyst
++ Stephen Karavos - Database Design
 
 
 -- -------------------------------------------------------------------------

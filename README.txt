@@ -66,4 +66,4 @@ Developed By:
 -- License
 -- -------------------------------------------------------------------------
 
-See References.txt
+See License.txt

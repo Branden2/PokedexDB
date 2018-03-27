@@ -23,7 +23,7 @@ Branden Rice
 + Facilitated Application/Database Interaction
 + Hosted GitHub Repository & Remote Database Server
 + Created readme.txt and contributions.txt
-+ Created Project Summary
++ Created Project Report
 
 Brandon Patterson
 ------------------------------------------------------------------
@@ -39,6 +39,5 @@ Stephen Karavos
 + Retrieved Data from Online Sources Using Excel
 + Populated Tables in Database
 + Assistant GUI Designer
-    - ADDED STUFF
-    - MORE STUFF
+    - Added Evolution Menu
     

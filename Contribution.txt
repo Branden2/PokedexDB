@@ -8,12 +8,14 @@ member.
 Bailey Weir
 ------------------------------------------------------------------
 + Created Presentation Slideshow
++ Wrote Business Rules
 + Created Conceptual Data Model
-+ Designed Tables in Database
++ Designed Tables in Database (Excluding Matchups, Evolutions, Attacks)
 + Lead GUI Design
     - Designed Layout of GUI
     - Made Methods for Generating Pop Up Windows/Textfields/Drop Menus
     - Added Music
+    - Error Checking
 
 Branden Rice
 ------------------------------------------------------------------
@@ -39,5 +41,7 @@ Stephen Karavos
 + Retrieved Data from Online Sources Using Excel
 + Populated Tables in Database
 + Assistant GUI Designer
-    - Added Evolution Menu
+    - Added Info Menu (Evolutions, Attacks, Matchups)
+    - Error Checking in Front End
+    - Return and Mute Sub-Menus
     

@@ -66,4 +66,18 @@ Developed By:
 -- License
 -- -------------------------------------------------------------------------
 
-See License.txt
+Pokemon is a registered trademark of The Pokemon Company, and is
+used under the Fair Use Act. All Pokemon names and images
+are owned by The Pokemon Company and we claim no ownership of
+any Pokemon assets used in Professor Oak's Pokedex Database.
+
+
+References
+----------------------------------------------------------------------------
+
+All pokemon images and attacks retrieved from:
+  - https://pokemondb.net/
+
+Pokemon descriptions and statistics retrieved from:
+  - https://bulbapedia.bulbagarden.net/
+

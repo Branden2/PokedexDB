@@ -31,6 +31,7 @@ Brandon Patterson
 ------------------------------------------------------------------
 + Assistant GUI Design
     - Added Menu Backgrounds
+    - Reviewed GUI Layout
 + QA Analyst
 + Improved Error Checking in Front End
 + Implemented Back End Methods in GUI
@@ -39,9 +40,11 @@ Stephen Karavos
 ------------------------------------------------------------------
 + Lead Database Design
 + Retrieved Data from Online Sources Using Excel
++ Retrived Pokemon Species Images from Online Source
 + Populated Tables in Database
 + Assistant GUI Designer
     - Added Info Menu (Evolutions, Attacks, Matchups)
     - Error Checking in Front End
-    - Return and Mute Sub-Menus
+    - Return and Mute in Sub-Menus
+    - Optimizing Front End Code
     
